@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT0 토큰 클레임 - Stable Network</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://t.me/rezerocrypto" target="_blank" class="title-link">
+                <h1>🏦 STABLE USDT 클레임</h1>
+                <p class="creator">(made by. 0xblackcow)</p>
+            </a>
+            <p class="subtitle">Stable Network (Chain ID: 988)</p>
+        </header>
+
+        <main>
+            <!-- 지갑 주소 입력 섹션 -->
+            <section class="input-section">
+                <div class="input-card">
+                    <h2>💰 지갑 주소 입력</h2>
+                    <p>클레임 정보를 조회할 지갑 주소를 입력하세요</p>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="wallet-input" 
+                            class="address-input" 
+                            placeholder="0x..."
+                            spellcheck="false"
+                        />
+                        <button id="fetch-button" class="btn btn-primary">
+                            🔍 정보 조회
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 클레임 정보 섹션 -->
+            <section id="claim-section" class="claim-section hidden">
+                <div class="claim-card">
+                    <h2>📊 클레임 가능한 토큰</h2>
+                    
+                    <div id="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>데이터를 불러오는 중...</p>
+                    </div>
+
+                    <div id="no-rewards" class="message-box info hidden">
+                        <p>⚠️ 클레임 가능한 USDT0 토큰이 없습니다.</p>
+                    </div>
+
+                    <div id="error-message" class="message-box error hidden">
+                        <p id="error-text"></p>
+                    </div>
+
+                    <div id="rewards-info" class="rewards-info hidden">
+                        <div class="info-box">
+                            <h3>📊 클레임 정보</h3>
+                            <div class="reward-item">
+                                <div class="reward-label">토큰</div>
+                                <div class="reward-value">USDT0</div>
+                            </div>
+                            <div class="reward-item">
+                                <div class="reward-label">클레임 가능 수량</div>
+                                <div class="reward-value large" id="unclaimed-amount">0</div>
+                            </div>
+                        </div>
+
+                        <div class="contract-params">
+                            <h3>📝 StableScan Write Contract 입력값</h3>
+                            <p class="instruction">
+                                아래 값들을 복사하여 
+                                <a href="https://stablescan.xyz/address/0x3ef3d8ba38ebe18db133cec108f4d14ce00dd9ae#writeProxyContract" target="_blank" class="link">
+                                    StableScan Write Contract
+                                </a>
+                                의 claim 함수에 입력하세요
+                            </p>
+
+                            <!-- users (address[]) -->
+                            <div class="param-box">
+                                <div class="param-header">
+                                    <span class="param-label">1. users (address[])</span>
+                                    <button class="btn-copy" data-target="users-value">📋 복사</button>
+                                </div>
+                                <div class="param-value-box">
+                                    <code id="users-value" class="param-value"></code>
+                                </div>
+                            </div>
+
+                            <!-- tokens (address[]) -->
+                            <div class="param-box">
+                                <div class="param-header">
+                                    <span class="param-label">2. tokens (address[])</span>
+                                    <button class="btn-copy" data-target="tokens-value">📋 복사</button>
+                                </div>
+                                <div class="param-value-box">
+                                    <code id="tokens-value" class="param-value">0xAB067d0832D40619EF445B7fAE510f5Da606Ab0A</code>
+                                </div>
+                            </div>
+
+                            <!-- amounts (uint256[]) -->
+                            <div class="param-box">
+                                <div class="param-header">
+                                    <span class="param-label">3. amounts (uint256[])</span>
+                                    <button class="btn-copy" data-target="amounts-value">📋 복사</button>
+                                </div>
+                                <div class="param-value-box">
+                                    <code id="amounts-value" class="param-value"></code>
+                                </div>
+                            </div>
+
+                            <!-- proofs (bytes32[][]) -->
+                            <div class="param-box">
+                                <div class="param-header">
+                                    <span class="param-label">4. proofs (bytes32[][])</span>
+                                    <button class="btn-copy" data-target="proofs-value">📋 복사</button>
+                                </div>
+                                <div class="param-value-box">
+                                    <code id="proofs-value" class="param-value"></code>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <a href="https://stablescan.xyz/address/0x3ef3d8ba38ebe18db133cec108f4d14ce00dd9ae#writeProxyContract" 
+                                   target="_blank" 
+                                   class="btn btn-primary btn-large">
+                                    🚀 StableScan에서 클레임하기
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 안내 섹션 -->
+            <section class="info-section">
+                <h3>📌 사용 방법</h3>
+                <ol>
+                    <li>위에 지갑 주소를 입력합니다</li>
+                    <li>"🔍 정보 조회" 버튼을 클릭합니다</li>
+                    <li>클레임 정보가 표시되면 각 파라미터를 복사합니다</li>
+                    <li><a href="https://stablescan.xyz/address/0x3ef3d8ba38ebe18db133cec108f4d14ce00dd9ae#writeProxyContract" target="_blank" class="link">StableScan Write Contract</a>로 이동합니다</li>
+                    <li>지갑을 연결하고 claim 함수에 복사한 값들을 입력합니다</li>
+                    <li>"Write" 버튼을 클릭하여 트랜잭션을 실행합니다</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>📋 입력 예시</h4>
+                    <p>StableScan의 claim 함수에는 4개의 파라미터를 입력해야 합니다:</p>
+                    <ul>
+                        <li><strong>users</strong>: 귀하의 지갑 주소 (배열 형태)</li>
+                        <li><strong>tokens</strong>: USDT0 토큰 주소 (배열 형태)</li>
+                        <li><strong>amounts</strong>: 클레임할 수량 (배열 형태)</li>
+                        <li><strong>proofs</strong>: Merkle proof (이중 배열 형태)</li>
+                    </ul>
+                </div>
+
+                <div class="security-notice">
+                    <h4>🔒 보안 안내</h4>
+                    <ul>
+                        <li><strong>입력한 지갑 주소는 어디에도 저장되지 않습니다</strong></li>
+                        <li>모든 데이터는 메모리에만 존재하며 페이지를 닫으면 즉시 삭제됩니다</li>
+                        <li>localStorage, sessionStorage, 쿠키를 사용하지 않습니다</li>
+                        <li>이 사이트는 정보 조회만 수행하며 트랜잭션을 실행하지 않습니다</li>
+                        <li>개인키는 절대 입력하거나 전송하지 않습니다</li>
+                        <li>모든 처리는 클라이언트 사이드에서만 이루어집니다</li>
+                        <li>공식 Merkl API만 사용합니다</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>⚠️ StableScan에서 트랜잭션 실행 전에 항상 주소와 수량을 확인하세요</p>
+            <p class="small">Powered by Merkl API & Stable Network</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

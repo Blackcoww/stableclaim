@@ -1,0 +1,25 @@
+{
+  "name": "stable-usdt-claim",
+  "version": "1.0.0",
+  "description": "STABLE USDT 클레임 (made by. 0xblackcow) - Stable Network USDT0 토큰 클레임 도우미",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1 --cors",
+    "dev": "npx http-server -p 8000 -c-1 --cors -o"
+  },
+  "keywords": [
+    "stable",
+    "usdt0",
+    "merkl",
+    "claim",
+    "web3",
+    "ethereum",
+    "blockchain"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
+
